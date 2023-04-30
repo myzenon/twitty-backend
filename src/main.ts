@@ -12,7 +12,10 @@ applyRoutes(server)
 
 const startServer = async () => {
     try {
-        await server.listen({ port: 3000 })
+        await server.listen({
+            port: Number(process.env['PORT'] ?? '3000'),
+            host: process.env['HOST'] ?? '0.0.0.0',
+        })
     }
     catch (error) {
         server.log.error(error)
