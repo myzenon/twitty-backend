@@ -49,6 +49,42 @@ const router: FastifyPluginAsync = async function (server) {
         },
     )
 
+    server.get(
+        '/:id',
+        {
+            schema: {
+                params: {
+                    type: 'object',
+                    required: [ 'id' ],
+                    properties: {
+                        id: { type: 'string' },
+                    },
+                },
+                response: {
+                    200: {
+                        type: 'object',
+                        properties: {
+                            id: { type: 'number' },
+                            name: { type: 'string' },
+                            content: { type: 'string' },
+                            createdAt: { type: 'string' },
+                            updatedAt: { type: 'string' },
+                        },
+                    },
+                },
+            },
+        },
+        async (serverRequest: FastifyRequest<{Params: { id: string, },}>, reply) => {
+            const { id } = serverRequest.params
+            const post = await database.post.findFirst({ where: { id: Number(id) } })
+            if (!post) {
+                reply.statusCode = 404
+                throw new Error('post id not found')
+            }
+            return post
+        },
+    )
+
     server.post(
         '/',
         {

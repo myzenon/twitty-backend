@@ -9,6 +9,7 @@
         "start": "ts-node -r tsconfig-paths/register src/main.ts"
     },
     "dependencies": {
+        "@fastify/cors": "^8.2.1",
         "@fastify/jwt": "^6.7.1",
         "@prisma/client": "4.13.0",
         "fastify": "^4.17.0",
